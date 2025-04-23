@@ -115,4 +115,27 @@ return {
       }
     end,
   },
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {
+      workspaces = {
+        {
+          name = 'work',
+          path = '~/Documents/notes/work',
+        },
+      },
+      daily_notes = {
+        folder = 'dailies',
+        date_format = '%Y-%m-%d',
+        default_tags = { 'daily-notes' },
+        template = nil,
+      },
+    },
+  },
 }
