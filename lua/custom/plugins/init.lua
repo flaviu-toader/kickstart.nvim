@@ -65,6 +65,9 @@ return {
     end,
   },
   {
+    'github/copilot.vim',
+  },
+  {
     'stevearc/overseer.nvim',
     config = function()
       local overseer = require 'overseer'
