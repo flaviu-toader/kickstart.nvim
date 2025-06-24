@@ -41,13 +41,24 @@ return {
     },
     config = function()
       require('codecompanion').setup {
+        adapters = {
+          ollama = function()
+            return require('codecompanion.adapters').extend('ollama', {
+              name = 'ollama',
+              schema = {
+                model = {
+                  default = 'deepseek-r1:14b',
+                },
+              },
+            })
+          end,
+        },
         strategies = {
           chat = {
-            -- Make sure you have an OPENAI_API_KEY env var with the api key for this to work
-            adapter = 'openai',
+            adapter = 'ollama',
           },
           inline = {
-            adapter = 'openai',
+            adapter = 'ollama',
           },
         },
       }
