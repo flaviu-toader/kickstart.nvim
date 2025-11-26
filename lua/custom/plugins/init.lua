@@ -55,6 +55,32 @@ return {
     config = true,
   },
   {
+    'olimorris/codecompanion.nvim',
+    lazy = false,
+    -- keys = {
+    --   '<leader>aa',
+    -- },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      local wk = require 'which-key'
+      wk.add {
+        { '<leader>aa', '<cmd>CodeCompanionActions<cr>', desc = 'Code Companion' },
+        { '<leader>ac', '<cmd>CodeCompanionChat<cr>', desc = 'Code Companion Chat' },
+        { '<leader>ai', '<cmd>CodeCompanion<cr>', desc = 'Code Companion Inline', mode = { 'n', 'v' } },
+      }
+      require('codecompanion').setup {
+        chat = {
+          adapter = 'anthropic',
+        },
+        inline = {
+          adapter = 'anthropic',
+        },
+      }
+    end,
+  },
+  {
     'stevearc/overseer.nvim',
     lazy = true,
     keys = {
