@@ -32,6 +32,14 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
+    config = function()
+      local wk = require 'which-key'
+      wk.add {
+        { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'Open LazyGit' },
+        { '<leader>gf', '<cmd>LazyGitFilterCurrentFile<cr>', desc = 'Open LazyGit buffer commits' },
+        { '<leader>gc', '<cmd>LazyGitFilter<cr>', desc = 'Open LazyGit commits' },
+      }
+    end,
   },
   {
     'github/copilot.vim',
