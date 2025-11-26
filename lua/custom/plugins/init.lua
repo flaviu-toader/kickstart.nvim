@@ -22,12 +22,10 @@ return {
   {
     'kdheepak/lazygit.nvim',
     lazy = true,
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
+    keys = {
+      '<leader>gg',
+      '<leader>gf',
+      '<leader>gc',
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -45,7 +43,26 @@ return {
     'github/copilot.vim',
   },
   {
+    'amitds1997/remote-nvim.nvim',
+    lazy = true,
+    cmd = { 'RemoteStart' },
+    version = '*', -- Pin to GitHub releases
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- For standard functions
+      'MunifTanjim/nui.nvim', -- To build the plugin UI
+      'nvim-telescope/telescope.nvim', -- For picking b/w different remote methods
+    },
+    config = true,
+  },
+  {
     'stevearc/overseer.nvim',
+    lazy = true,
+    keys = {
+      '<leader>et',
+      '<leader>ec',
+      '<leader>er',
+      '<leader>el',
+    },
     config = function()
       local overseer = require 'overseer'
       local wk = require 'which-key'
@@ -61,7 +78,8 @@ return {
   {
     'epwalsh/obsidian.nvim',
     version = '*',
-    lazy = false,
+    lazy = true,
+    cmd = { 'ObsidianOpen', 'ObsidianToday' },
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
