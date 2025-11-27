@@ -95,9 +95,8 @@ return {
       overseer.setup()
       wk.add {
         { '<leader>et', overseer.toggle, desc = 'Toggle overseer' },
-        { '<leader>ec', '<cmd>OverseerRunCmd<cr>', desc = 'Overseer run command' },
         { '<leader>er', '<cmd>OverseerRun<cr>', desc = 'Overseer run' },
-        { '<leader>el', '<cmd>OverseerLoadBundle<cr>', desc = 'Overseer load bundle' },
+        { '<leader>er', '<cmd>OverseerShell<cr>', desc = 'Overseer shell command' },
       }
     end,
   },
