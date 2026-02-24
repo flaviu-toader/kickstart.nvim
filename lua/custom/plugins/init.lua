@@ -239,7 +239,7 @@ return {
     'tadaa/vimade',
     opts = {
       recipe = { 'default', { animate = true } },
-      fadelevel = 0.4,
+      fadelevel = 0.7,
     },
   },
 }
