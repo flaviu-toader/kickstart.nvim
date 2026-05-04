@@ -24,4 +24,23 @@ return {
   {
     'github/copilot.vim',
   },
+  {
+    'FabijanZulj/blame.nvim',
+    lazy = false,
+    config = function()
+      require('blame').setup()
+      vim.keymap.set('n', '<leader>tb', '<cmd>BlameToggle window<cr>', { desc = '[T]oggle [B]lame' })
+    end,
+  },
+  {
+    'tanvirtin/vgit.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
+    -- Lazy loading on 'VimEnter' event is necessary.
+    event = 'VimEnter',
+    config = function()
+      require('vgit').setup()
+      vim.keymap.set('n', '<leader>vh', '<cmd>VGit buffer_history_preview<cr>', { desc = '[V]Git Buffer [H]istory Preview' })
+      vim.keymap.set('n', '<leader>vp', '<cmd>VGit project_diff_preview<cr>', { desc = '[V]Git [P]roject Diff Preview' })
+    end,
+  },
 }
