@@ -164,6 +164,9 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Enable local per-project .nvim.lua configs
+vim.o.exrc = true
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
