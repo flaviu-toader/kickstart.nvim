@@ -13,16 +13,24 @@ return {
     opts = {},
   },
   {
+    'zbirenbaum/copilot.lua',
+    lazy = false,
+    config = function() require('copilot').setup {} end,
+  },
+  {
     'olimorris/codecompanion.nvim',
     version = '^19.0.0',
-    opts = {},
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
+      'zbirenbaum/copilot.lua',
     },
-  },
-  {
-    'github/copilot.vim',
+    opts = {
+      strategies = {
+        chat = { adapter = 'copilot' },
+        inline = { adapter = 'copilot' },
+      },
+    },
   },
   {
     'FabijanZulj/blame.nvim',
