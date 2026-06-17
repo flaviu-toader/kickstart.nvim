@@ -18,17 +18,43 @@ return {
     config = function() require('copilot').setup {} end,
   },
   {
+    'ravitemer/mcphub.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    build = 'npm install -g mcp-hub@latest',
+    config = function()
+      require('mcphub').setup()
+      vim.keymap.set('n', '<leader>mh', '<cmd>MCPHub<cr>', { desc = '[M]CP [H]ub' })
+    end,
+  },
+  {
     'olimorris/codecompanion.nvim',
     version = '^19.0.0',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'zbirenbaum/copilot.lua',
+      'ravitemer/mcphub.nvim',
     },
     opts = {
       strategies = {
         chat = { adapter = 'copilot' },
         inline = { adapter = 'copilot' },
+        agent = { adapter = 'copilot' },
+      },
+      -- Auto-continue the agentic tool loop without manual re-submission
+      opts = {
+        auto_submit_errors = true,
+        auto_submit_success = true,
+      },
+      extensions = {
+        mcphub = {
+          callback = 'mcphub.extensions.codecompanion',
+          opts = {
+            make_vars = false,          -- disabled: codecompanion v19 has no variables API
+            make_slash_commands = true, -- MCP prompts become /slash commands
+            show_result_in_chat = true,
+          },
+        },
       },
     },
   },
