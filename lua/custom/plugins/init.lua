@@ -36,35 +36,40 @@ return {
       'ravitemer/mcphub.nvim',
     },
     opts = {
-      strategies = {
+      interactions = {
         chat = { adapter = 'copilot' },
         inline = { adapter = 'copilot' },
         agent = { adapter = 'copilot' },
+        background = { adapter = 'copilot' },
+        cli = {
+          agent = 'copilot',
+          agents = {
+            copilot = {
+              cmd = 'copilot',
+              args = {},
+              description = 'Copilot CLI',
+              provider = 'terminal',
+            },
+          },
+        },
       },
       -- Auto-continue the agentic tool loop without manual re-submission
       opts = {
         auto_submit_errors = true,
         auto_submit_success = true,
+        agentic = true,
       },
       extensions = {
         mcphub = {
           callback = 'mcphub.extensions.codecompanion',
           opts = {
-            make_vars = false,          -- disabled: codecompanion v19 has no variables API
+            make_vars = false, -- disabled: codecompanion v19 has no variables API
             make_slash_commands = true, -- MCP prompts become /slash commands
             show_result_in_chat = true,
           },
         },
       },
     },
-  },
-  {
-    'FabijanZulj/blame.nvim',
-    lazy = false,
-    config = function()
-      require('blame').setup()
-      vim.keymap.set('n', '<leader>tb', '<cmd>BlameToggle window<cr>', { desc = '[T]oggle [B]lame' })
-    end,
   },
   {
     'tanvirtin/vgit.nvim',
