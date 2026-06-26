@@ -127,19 +127,19 @@ vim.pack.add {
 }
 require('dotenv').setup()
 
--- -- nvim-dap - Neovim Debug Adapter Protocol
--- vim.pack.add {
---   codeberg 'mfussenegger/nvim-dap',
---   gh 'igorlfs/nvim-dap-view'
--- }
--- local dap = require('dap')
--- wk.add {
---   { '<leader>d', group = 'Debug' },
---   { '<leader>db', function() dap.toggle_breakpoint() end, desc = 'Toggle breakpoint', mode = 'n' },
---   { '<leader>dc', function() dap.continue() end, desc = 'DAP Start / Continue', mode = 'n' },
---   { '<leader>ds', function() dap.step_over() end, desc = 'Step Over' },
---   { '<leader>do', function() dap.step_into() end, desc = 'Step Into' },
---   { '<leader>dr', function() dap.repl.open() end, desc = 'REPL' },
---   { '<leader>dvo', '<cmd>DapViewOpen<cr>', desc = 'DAP View Open' },
---   { '<leader>dvo', '<cmd>DapViewClose<cr>', desc = 'DAP View Close' },
--- }
+-- nvim-dap - Neovim Debug Adapter Protocol
+vim.pack.add {
+  codeberg 'mfussenegger/nvim-dap',
+  gh 'igorlfs/nvim-dap-view'
+}
+local dap = require('dap')
+wk.add {
+  { '<leader>d', group = 'Debug' },
+  { '<leader>db', function() dap.toggle_breakpoint() end, desc = 'Toggle breakpoint', mode = 'n' },
+  { '<leader>dc', function() dap.continue() end, desc = 'DAP Start / Continue', mode = 'n' },
+  { '<leader>ds', function() dap.step_over() end, desc = 'Step Over' },
+  { '<leader>do', function() dap.step_into() end, desc = 'Step Into' },
+  { '<leader>dr', function() dap.repl.open() end, desc = 'REPL' },
+  { '<leader>dvo', '<cmd>DapViewOpen<cr>', desc = 'DAP View Open' },
+  { '<leader>dvo', '<cmd>DapViewClose<cr>', desc = 'DAP View Close' },
+}
