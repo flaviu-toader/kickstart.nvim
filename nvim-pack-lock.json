@@ -22,6 +22,10 @@
       "rev": "7df55b20b5b653941f0bcff87e559cabb6fafeb0",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
+    "dotenv.nvim": {
+      "rev": "7d516e9293c6e3ac21830fb10a4e8674c02747c6",
+      "src": "https://github.com/ellisonleao/dotenv.nvim"
+    },
     "fidget.nvim": {
       "rev": "6f793b2bcd2d35e201c09520f698bb763220908a",
       "src": "https://github.com/j-hui/fidget.nvim"

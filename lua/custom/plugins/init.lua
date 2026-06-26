@@ -122,6 +122,11 @@ wk.add {
   { '<leader>ghtt', '<cmd>GHToggleThread<cr>', desc = 'Toggle' },
 }
 
+vim.pack.add {
+  gh 'ellisonleao/dotenv.nvim'
+}
+require('dotenv').setup()
+
 -- -- nvim-dap - Neovim Debug Adapter Protocol
 -- vim.pack.add {
 --   codeberg 'mfussenegger/nvim-dap',
