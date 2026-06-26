@@ -2,6 +2,7 @@
 -- Migrated from lazy.nvim to vim.pack (Neovim 0.12+)
 
 local function gh(repo) return 'https://github.com/' .. repo end
+local function codeberg(repo) return 'https://codeberg.org/' .. repo end
 
 -- Build hook for mcphub.nvim
 vim.api.nvim_create_autocmd('PackChanged', {
@@ -85,6 +86,12 @@ vim.pack.add {
 }
 require('litee.lib').setup()
 require('litee.gh').setup()
+
+-- nvim-dap - Neovim Debug Adapter Protocol
+vim.pack.add {
+  codeberg 'mfussenegger/nvim-dap',
+  gh 'igorlfs/nvim-dap-view'
+}
 
 local wk = require 'which-key'
 wk.add {
