@@ -186,3 +186,11 @@ wk.add {
   { '<leader>dvh', function() dap_view.hover() end, desc = 'DAP Hover', mode = { 'n', 'v' } },
   { '<leader>dvw', function() dap_view.add_expr() end, desc = 'DAP Add Watch', mode = { 'n', 'v' } },
 }
+
+vim.pack.add {
+  gh 'kdheepak/lazygit.nvim'
+}
+wk.add {
+  { '<leader>gl', '<cmd>LazyGit<cr>', desc = 'Lazygit' },
+  { '<leader>gf', '<cmd>LazyGitFilterCurrentFile<cr>', desc = 'Lazygit filter current file' },
+}
