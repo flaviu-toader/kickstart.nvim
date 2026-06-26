@@ -133,13 +133,56 @@ vim.pack.add {
   gh 'igorlfs/nvim-dap-view'
 }
 local dap = require('dap')
+local dap_view = require('dap-view')
+
+dap.defaults.fallback.switchbuf = 'useopen,usetab,newtab'
+
+dap_view.setup {
+  auto_toggle = true,
+  windows = {
+    position = 'right',
+    size = 0.35,
+    terminal = {
+      position = 'below',
+      size = 0.25,
+      hide = { 'lldb' },
+    },
+  },
+  winbar = {
+    default_section = 'scopes',
+    controls = {
+      enabled = true,
+    },
+  },
+  virtual_text = {
+    enabled = true,
+    position = 'inline',
+  },
+  switchbuf = 'useopen,usetab,newtab',
+}
+
+local function clear_winfixbuf()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    pcall(vim.api.nvim_set_option_value, 'winfixbuf', false, { win = win })
+  end
+end
+
+dap.listeners.before.event_stopped['custom_clear_winfixbuf'] = clear_winfixbuf
+dap.listeners.before.event_initialized['custom_clear_winfixbuf'] = clear_winfixbuf
+
 wk.add {
   { '<leader>d', group = 'Debug' },
   { '<leader>db', function() dap.toggle_breakpoint() end, desc = 'Toggle breakpoint', mode = 'n' },
+  { '<leader>dB', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Conditional breakpoint', mode = 'n' },
   { '<leader>dc', function() dap.continue() end, desc = 'DAP Start / Continue', mode = 'n' },
-  { '<leader>ds', function() dap.step_over() end, desc = 'Step Over' },
-  { '<leader>do', function() dap.step_into() end, desc = 'Step Into' },
-  { '<leader>dr', function() dap.repl.open() end, desc = 'REPL' },
+  { '<leader>dt', function() dap.terminate() end, desc = 'Terminate', mode = 'n' },
+  { '<leader>di', function() dap.step_into() end, desc = 'Step Into', mode = 'n' },
+  { '<leader>do', function() dap.step_over() end, desc = 'Step Over', mode = 'n' },
+  { '<leader>dO', function() dap.step_out() end, desc = 'Step Out', mode = 'n' },
+  { '<leader>dr', function() dap.repl.toggle() end, desc = 'REPL', mode = 'n' },
+  { '<leader>dv', '<cmd>DapViewToggle<cr>', desc = 'DAP View Toggle' },
   { '<leader>dvo', '<cmd>DapViewOpen<cr>', desc = 'DAP View Open' },
-  { '<leader>dvo', '<cmd>DapViewClose<cr>', desc = 'DAP View Close' },
+  { '<leader>dvc', '<cmd>DapViewClose<cr>', desc = 'DAP View Close' },
+  { '<leader>dvh', function() dap_view.hover() end, desc = 'DAP Hover', mode = { 'n', 'v' } },
+  { '<leader>dvw', function() dap_view.add_expr() end, desc = 'DAP Add Watch', mode = { 'n', 'v' } },
 }
