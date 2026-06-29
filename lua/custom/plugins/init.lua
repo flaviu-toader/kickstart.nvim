@@ -74,6 +74,29 @@ require('codecompanion').setup {
   },
 }
 
+-- Workaround: ACP model changes (e.g. switching to GPT-5.5) call send_rpc_request
+-- which tries to coroutine.yield inside a vim.schedule/C-call boundary, causing
+-- "attempt to yield across C-call boundary". Fix by wrapping ACP change_model in
+-- a fresh async coroutine via async.sync so the yield is safe.
+-- Upstream issue: https://github.com/olimorris/codecompanion.nvim
+vim.schedule(function()
+  local ok, Chat = pcall(require, 'codecompanion.interactions.chat')
+  if not ok then
+    return
+  end
+  local async = require 'codecompanion.utils.async'
+  local orig = Chat.change_model
+  Chat.change_model = function(self, args)
+    if self.adapter and self.adapter.type == 'acp' then
+      async.sync(function()
+        orig(self, args)
+      end)()
+    else
+      return orig(self, args)
+    end
+  end
+end)
+
 -- vgit.nvim - visual git integration
 vim.pack.add { gh 'tanvirtin/vgit.nvim' }
 require('vgit').setup()
