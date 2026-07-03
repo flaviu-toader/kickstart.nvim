@@ -388,10 +388,33 @@ do
   vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
   require('tokyonight').setup {
+    transparent = true, -- Don't paint a background color; let the terminal's background show through
     styles = {
       comments = { italic = false }, -- Disable italics in comments
+      sidebars = 'transparent',
+      floats = 'transparent',
     },
   }
+
+  -- Clear leftover background highlights so the terminal's (transparent)
+  -- background shows through instead of Neovim drawing its own.
+  local function make_transparent()
+    local groups = {
+      'Normal',
+      'NormalNC',
+      'NormalFloat',
+      'FloatBorder',
+      'SignColumn',
+      'LineNr',
+      'CursorLineNr',
+      'EndOfBuffer',
+      'MsgArea',
+      'Pmenu',
+    }
+    for _, group in ipairs(groups) do
+      vim.api.nvim_set_hl(0, group, { bg = 'none' })
+    end
+  end
 
   -- Apply colorscheme based on terminal background (light/dark mode).
   -- Neovim 0.10+ auto-detects terminal background via OSC 11; the OptionSet
@@ -402,6 +425,7 @@ do
     else
       vim.cmd.colorscheme 'tokyonight-night'
     end
+    make_transparent()
   end
 
   vim.api.nvim_create_autocmd('OptionSet', {
