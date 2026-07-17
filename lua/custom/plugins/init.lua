@@ -39,12 +39,55 @@ vim.pack.add {
   gh 'nvim-treesitter/nvim-treesitter',
   -- plenary.nvim and copilot.lua already added above
 }
+local codecompanion_llama_cpp = {
+  name = 'llama.cpp',
+  model = vim.env.CODECOMPANION_LLAMA_CPP_MODEL or 'qwen3.5-9b',
+}
 require('codecompanion').setup {
+  adapters = {
+    http = {
+      ['llama.cpp'] = function()
+        return require('codecompanion.adapters').extend('openai_compatible', {
+          formatted_name = 'llama.cpp',
+          env = {
+            url = vim.env.CODECOMPANION_LLAMA_CPP_URL or 'http://127.0.0.1:8080',
+            api_key = 'TERM',
+            chat_url = '/v1/chat/completions',
+            models_endpoint = '/v1/models',
+          },
+          schema = {
+            model = {
+              default = vim.env.CODECOMPANION_LLAMA_CPP_MODEL or 'qwen3.5-9b',
+            },
+          },
+          handlers = {
+            parse_message_meta = function(self, data)
+              local extra = data.extra
+              if extra and extra.reasoning_content then
+                data.output.reasoning = { content = extra.reasoning_content }
+                if data.output.content == '' then
+                  data.output.content = nil
+                end
+              end
+              return data
+            end,
+          },
+        })
+      end,
+    },
+  },
   interactions = {
-    chat = { adapter = 'copilot' },
-    inline = { adapter = 'copilot' },
-    agent = { adapter = 'copilot' },
-    background = { adapter = 'copilot' },
+    chat = {
+      adapter = codecompanion_llama_cpp,
+      tools = {
+        opts = {
+          default_tools = { 'agent' },
+        },
+      },
+    },
+    inline = { adapter = codecompanion_llama_cpp },
+    agent = { adapter = codecompanion_llama_cpp },
+    background = { codecompanion_llama_cpp },
     cli = {
       agent = 'copilot',
       agents = {
