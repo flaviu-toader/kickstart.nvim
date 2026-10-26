@@ -260,3 +260,8 @@ wk.add {
   { '<leader>gl', '<cmd>LazyGit<cr>', desc = 'Lazygit' },
   { '<leader>gf', '<cmd>LazyGitFilterCurrentFile<cr>', desc = 'Lazygit filter current file' },
 }
+
+-- Markdown previewer
+vim.pack.add {
+  gh 'iamcco/markdown-preview.nvim'
+}
