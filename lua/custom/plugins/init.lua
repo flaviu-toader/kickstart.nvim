@@ -9,9 +9,7 @@ local wk = require 'which-key'
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     if ev.data.spec.name == 'mcphub.nvim' then
-      if ev.data.kind == 'install' or ev.data.kind == 'update' then
-        vim.system({ 'npm', 'install', '-g', 'mcp-hub@latest' }):wait()
-      end
+      if ev.data.kind == 'install' or ev.data.kind == 'update' then vim.system({ 'npm', 'install', '-g', 'mcp-hub@latest' }):wait() end
     end
   end,
 })
@@ -65,9 +63,7 @@ require('codecompanion').setup {
               local extra = data.extra
               if extra and extra.reasoning_content then
                 data.output.reasoning = { content = extra.reasoning_content }
-                if data.output.content == '' then
-                  data.output.content = nil
-                end
+                if data.output.content == '' then data.output.content = nil end
               end
               return data
             end,
@@ -124,16 +120,12 @@ require('codecompanion').setup {
 -- Upstream issue: https://github.com/olimorris/codecompanion.nvim
 vim.schedule(function()
   local ok, Chat = pcall(require, 'codecompanion.interactions.chat')
-  if not ok then
-    return
-  end
+  if not ok then return end
   local async = require 'codecompanion.utils.async'
   local orig = Chat.change_model
   Chat.change_model = function(self, args)
     if self.adapter and self.adapter.type == 'acp' then
-      async.sync(function()
-        orig(self, args)
-      end)()
+      async.sync(function() orig(self, args) end)()
     else
       return orig(self, args)
     end
@@ -189,17 +181,17 @@ wk.add {
 }
 
 vim.pack.add {
-  gh 'ellisonleao/dotenv.nvim'
+  gh 'ellisonleao/dotenv.nvim',
 }
 require('dotenv').setup()
 
 -- nvim-dap - Neovim Debug Adapter Protocol
 vim.pack.add {
   codeberg 'mfussenegger/nvim-dap',
-  gh 'igorlfs/nvim-dap-view'
+  gh 'igorlfs/nvim-dap-view',
 }
-local dap = require('dap')
-local dap_view = require('dap-view')
+local dap = require 'dap'
+local dap_view = require 'dap-view'
 
 dap.defaults.fallback.switchbuf = 'useopen,usetab,newtab'
 
@@ -254,7 +246,7 @@ wk.add {
 }
 
 vim.pack.add {
-  gh 'kdheepak/lazygit.nvim'
+  gh 'kdheepak/lazygit.nvim',
 }
 wk.add {
   { '<leader>gl', '<cmd>LazyGit<cr>', desc = 'Lazygit' },
@@ -263,5 +255,33 @@ wk.add {
 
 -- Markdown previewer
 vim.pack.add {
-  gh 'iamcco/markdown-preview.nvim'
+  gh 'iamcco/markdown-preview.nvim',
 }
+
+-- Devcontainer
+vim.pack.add {
+  gh 'esensar/nvim-dev-container'
+}
+require('devcontainer').setup({
+  container_runtime = "podman",
+  compose_command = "podman-compose",
+})
+
+
+-- In Neovim Markdown previewer
+vim.pack.add {
+  gh 'ellisonleao/glow.nvim'
+}
+require('glow').setup()
+
+-- autocmd for post-installs
+vim.api.nvim_create_autocmd('PackChanged', {
+  desc = 'Run markdown-preview.nvim post-install step',
+  callback = function(ev)
+    -- Only act on this specific plugin
+    if ev.data.kind == 'install' and ev.data.spec.name == 'iamcco/markdown-preview.nvim' then
+      -- Call the plugin's own install function
+      vim.fn['mkdp#util#install']()
+    end
+  end,
+})
