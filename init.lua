@@ -841,6 +841,7 @@ do
       -- rust = { 'rustfmt' },
       lua = { 'stylua' },
       cpp = { 'clang-format' },
+      zig = { 'zig fmt' }
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --
