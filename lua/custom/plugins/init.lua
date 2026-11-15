@@ -270,9 +270,9 @@ require('devcontainer').setup({
 
 -- In Neovim Markdown previewer
 vim.pack.add {
-  gh 'ellisonleao/glow.nvim'
+  gh 'MeanderingProgrammer/render-markdown.nvim'
 }
-require('glow').setup()
+require('render-markdown').setup()
 
 -- autocmd for post-installs
 vim.api.nvim_create_autocmd('PackChanged', {
