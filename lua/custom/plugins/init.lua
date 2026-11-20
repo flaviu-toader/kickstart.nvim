@@ -260,17 +260,20 @@ vim.pack.add {
 
 -- Devcontainer
 vim.pack.add {
-  gh 'esensar/nvim-dev-container'
+  gh 'esensar/nvim-dev-container',
 }
-require('devcontainer').setup({
-  container_runtime = "podman",
-  compose_command = "podman-compose",
-})
+require('devcontainer').setup {
+  container_runtime = 'podman',
+  compose_command = 'podman-compose',
+}
 
+vim.filetype.add { extension = { als = 'alloy' } }
+vim.pack.add { gh 'runoshun/vim-alloy' } -- syntax highlighting
+vim.lsp.enable 'alloy_ls'
 
 -- In Neovim Markdown previewer
 vim.pack.add {
-  gh 'MeanderingProgrammer/render-markdown.nvim'
+  gh 'MeanderingProgrammer/render-markdown.nvim',
 }
 require('render-markdown').setup()
 
